@@ -7,6 +7,7 @@ import i.valerii_timakov.serial_monitor.serial_monitor.select_wrappers.ItemWrapp
 import i.valerii_timakov.serial_monitor.serial_monitor.select_wrappers.PortWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -18,7 +19,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
+@Log4j2
 public class SerialMonitorController {
 
     @FXML
@@ -50,6 +51,7 @@ public class SerialMonitorController {
 
     private OpenedPortWrapper currentOpenedPortWrapper;
     private List<String> sendHistory = new LinkedList<>();
+    private int logCaretPosition = 0;
 
     private final List<ItemWrapper<String>> endItemWrappers = Arrays.asList(
         new ItemWrapper<>("\n", "NL"),
@@ -183,23 +185,24 @@ public class SerialMonitorController {
             closeCurrentPort();
         }
 
-
         OpenedPortWrapper op = new OpenedPortWrapper(port);
         setCurrentOpenedPortWrapper(op);
         op.setOnClose(() -> setCurrentOpenedPortWrapper(null));
         op.setInputConsumer(dataReceived -> {
             if (!dataReceived.isEmpty()) {
-                gotData.append(dataReceived);
-                communicationOutput.setText(gotData.toString());
+                communicationOutput.appendText(dataReceived);
+                logCaretPosition = communicationOutput.getLength();
+                communicationOutput.positionCaret(logCaretPosition);
             }
-            //communicationOutput.getParagraphs().add(dataReceived);
         });
         op.init();
     }
 
     @FXML
     protected void closeCurrentPort() {
-        currentOpenedPortWrapper.stop();
+        if (currentOpenedPortWrapper != null) {
+            currentOpenedPortWrapper.stop();
+        }
     }
 
     private void setCurrentOpenedPortWrapper(OpenedPortWrapper value) {
