@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_LEFT" prefHeight="288.0" prefWidth="557.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="i.valerii_timakov.serial_monitor.serial_monitor.SerialMonitorController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <HBox alignment="CENTER_LEFT" prefWidth="300.0">
+        <children>
+            <ChoiceBox fx:id="portsSelect" prefWidth="150.0">
+                <HBox.margin>
+                    <Insets right="5.0" />
+                </HBox.margin>
+            </ChoiceBox>
+            <Button onAction="#refreshPorts" text="Refresh">
+                <HBox.margin>
+                    <Insets right="5.0" />
+                </HBox.margin>
+            </Button>
+            <Button fx:id="openPortButton" disable="true" mnemonicParsing="false" onAction="#openPort" text="Open">
+                <HBox.margin>
+                    <Insets right="5.0" />
+                </HBox.margin>
+            </Button>
+            <Button fx:id="closeCurrentPortButton" disable="true" mnemonicParsing="false" onAction="#closeCurrentPort" text="Close">
+                <HBox.margin>
+                    <Insets right="5.0" />
+                </HBox.margin>
+            </Button>
+        </children>
+     </HBox>
+    <Accordion prefHeight="70.0" prefWidth="518.0">
+        <panes>
+            <TitledPane fx:id="settingsPane" animated="false" text="Connection settings">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="200.0">
+                        <children>
+                            <HBox layoutX="-22.0" layoutY="-17.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <children>
+                                    <Label text="Baud rate:">
+                                        <HBox.margin>
+                                            <Insets right="5.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <ChoiceBox fx:id="baudRateSelect" prefWidth="150.0">
+                                        <HBox.margin>
+                                            <Insets right="8.0" />
+                                        </HBox.margin>
+                                    </ChoiceBox>
+                                    <Label text="Data bits:">
+                                        <HBox.margin>
+                                            <Insets right="5.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <ChoiceBox fx:id="dataBitsSelect" prefWidth="150.0">
+                                        <HBox.margin>
+                                            <Insets right="8.0" />
+                                        </HBox.margin>
+                                    </ChoiceBox>
+                                    <Label text="Stop bits:">
+                                        <HBox.margin>
+                                            <Insets right="5.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <ChoiceBox fx:id="stopBitsSelect" prefWidth="150.0">
+                                        <HBox.margin>
+                                            <Insets right="8.0" />
+                                        </HBox.margin>
+                                    </ChoiceBox>
+                                    <Label text="Parity:">
+                                        <HBox.margin>
+                                            <Insets right="5.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <ChoiceBox fx:id="paritySelect" prefWidth="150.0">
+                                        <HBox.margin>
+                                            <Insets right="8.0" />
+                                        </HBox.margin>
+                                    </ChoiceBox>
+                                    <Label text="Flow control:">
+                                        <HBox.margin>
+                                            <Insets right="5.0" />
+                                        </HBox.margin>
+                                    </Label>
+                                    <ChoiceBox fx:id="flowControlSelect" prefWidth="150.0">
+                                        <HBox.margin>
+                                            <Insets right="8.0" />
+                                        </HBox.margin>
+                                    </ChoiceBox>
+                                </children>
+                            </HBox>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </TitledPane>
+        </panes>
+    </Accordion>
+    <HBox alignment="CENTER_LEFT" prefWidth="300.0">
+        <children>
+            <TextField fx:id="sendInput" maxWidth="260.0" minHeight="20.0" prefHeight="26.0" prefWidth="260.0">
+                <HBox.margin>
+                    <Insets right="5.0" />
+                </HBox.margin></TextField>
+            <Label alignment="CENTER" text="Append:">
+                <HBox.margin>
+                    <Insets right="2.0" />
+                </HBox.margin></Label>
+            <ChoiceBox fx:id="appendSelect" prefWidth="150.0">
+                <HBox.margin>
+                    <Insets right="5.0" />
+                </HBox.margin></ChoiceBox>
+            <Button fx:id="sendButton" alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#send" text="Send" />
+        </children>
+    </HBox>
+    <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <tabs>
+            <Tab text="Untitled Tab 1">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <TextArea fx:id="communicationOutput" layoutX="2.0" layoutY="8.0" prefHeight="138.0" prefWidth="518.0" AnchorPane.bottomAnchor="2.4000000000000057" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="1.2000000000000455" AnchorPane.topAnchor="8.0" />
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
+            <Tab text="Untitled Tab 2">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
+</VBox>
