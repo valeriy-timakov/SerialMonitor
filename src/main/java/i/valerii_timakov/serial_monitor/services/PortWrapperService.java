@@ -3,6 +3,7 @@ package i.valerii_timakov.serial_monitor.services;
 import com.fazecast.jSerialComm.SerialPort;
 import i.valerii_timakov.serial_monitor.exceptions.PortException;
 import i.valerii_timakov.serial_monitor.utils.Log;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
@@ -58,10 +59,9 @@ public class PortWrapperService implements UnidirectedMessageConsumer {
         setCurrentOpenedPortWrapper(op);
     }
 
-    public void addConnectionStateListener(Consumer<Boolean> listener) {
-        if (listener != null) {
-            connectionStateListeners.add(listener);
-        }
+    public void addConnectionStateListener(@NonNull Consumer<Boolean> listener) {
+        connectionStateListeners.add(listener);
+        callListener(listener);
     }
 
     public void closeCurrentPort() {
@@ -73,13 +73,15 @@ public class PortWrapperService implements UnidirectedMessageConsumer {
 
     private void setCurrentOpenedPortWrapper(OpenedPortWrapper value) {
         currentOpenedPortWrapper = Optional.ofNullable(value);
-        connectionStateListeners.forEach(connectionStateListener -> {
-            try {
-                connectionStateListener.accept(currentOpenedPortWrapper.isPresent());
-            } catch (Throwable t) {
-                Log.error("Error processing current open port wrapper change listener!", t);
-            }
-        });
+        connectionStateListeners.forEach(this::callListener);
+    }
+
+    private void callListener(Consumer<Boolean> connectionStateListener) {
+        try {
+            connectionStateListener.accept(currentOpenedPortWrapper.isPresent());
+        } catch (Throwable t) {
+            Log.error("Error processing current open port wrapper change listener!", t);
+        }
     }
 
     public Optional<Charset> getCurrentPortCharset() {

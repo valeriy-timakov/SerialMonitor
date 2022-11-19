@@ -4,29 +4,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="491.0" prefWidth="843.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="i.valerii_timakov.serial_monitor.controllers.SerialMonitorController">
+<VBox prefHeight="491.0" prefWidth="907.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="i.valerii_timakov.serial_monitor.controllers.SerialMonitorController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <HBox alignment="CENTER_LEFT" prefWidth="300.0">
         <ChoiceBox fx:id="portsSelect" prefWidth="150.0">
             <HBox.margin>
-                <Insets right="5.0"/>
+                <Insets right="5.0" />
             </HBox.margin>
         </ChoiceBox>
         <Button fx:id="refreshPortsButton" text="Refresh">
             <HBox.margin>
-                <Insets right="5.0"/>
+                <Insets right="5.0" />
             </HBox.margin>
         </Button>
         <Button fx:id="openPortButton" disable="true" mnemonicParsing="false" text="Open">
             <HBox.margin>
-                <Insets right="5.0"/>
+                <Insets right="5.0" />
             </HBox.margin>
         </Button>
         <Button fx:id="closeCurrentPortButton" disable="true" mnemonicParsing="false" text="Close">
             <HBox.margin>
-                <Insets right="5.0"/>
+                <Insets right="5.0" />
             </HBox.margin>
         </Button>
     </HBox>
@@ -34,122 +34,118 @@
         <panes>
             <TitledPane fx:id="settingsPane" animated="false" text="Connection settings">
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="200.0">
-                    <HBox layoutX="-22.0" layoutY="-17.0" prefHeight="50.0" prefWidth="200.0"
-                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                          AnchorPane.topAnchor="0.0">
+                    <HBox layoutX="-22.0" layoutY="-17.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <Label text="Baud rate:">
                             <HBox.margin>
-                                <Insets right="5.0"/>
+                                <Insets right="5.0" />
                             </HBox.margin>
                         </Label>
                         <ChoiceBox fx:id="baudRateSelect" prefWidth="150.0">
                             <HBox.margin>
-                                <Insets right="8.0"/>
+                                <Insets right="8.0" />
                             </HBox.margin>
                         </ChoiceBox>
                         <Label text="Data bits:">
                             <HBox.margin>
-                                <Insets right="5.0"/>
+                                <Insets right="5.0" />
                             </HBox.margin>
                         </Label>
                         <ChoiceBox fx:id="dataBitsSelect" prefWidth="150.0">
                             <HBox.margin>
-                                <Insets right="8.0"/>
+                                <Insets right="8.0" />
                             </HBox.margin>
                         </ChoiceBox>
                         <Label text="Stop bits:">
                             <HBox.margin>
-                                <Insets right="5.0"/>
+                                <Insets right="5.0" />
                             </HBox.margin>
                         </Label>
                         <ChoiceBox fx:id="stopBitsSelect" prefWidth="150.0">
                             <HBox.margin>
-                                <Insets right="8.0"/>
+                                <Insets right="8.0" />
                             </HBox.margin>
                         </ChoiceBox>
                         <Label text="Parity:">
                             <HBox.margin>
-                                <Insets right="5.0"/>
+                                <Insets right="5.0" />
                             </HBox.margin>
                         </Label>
                         <ChoiceBox fx:id="paritySelect" prefWidth="150.0">
                             <HBox.margin>
-                                <Insets right="8.0"/>
+                                <Insets right="8.0" />
                             </HBox.margin>
                         </ChoiceBox>
-                        <Label layoutX="5.0" text="Flow control:"/>
-                        <ChoiceBox fx:id="flowControlSelect" layoutX="5.0" prefWidth="150.0"/>
-                        <Label layoutX="5.0" text="Encoding:"/>
-                        <ChoiceBox fx:id="encodingSelect" layoutX="5.0" prefWidth="150.0"/>
+                        <Label layoutX="5.0" text="Flow control:" />
+                        <ChoiceBox fx:id="flowControlSelect" layoutX="5.0" prefWidth="150.0" />
+                        <Label layoutX="5.0" text="Encoding:" />
+                        <ChoiceBox fx:id="encodingSelect" layoutX="5.0" prefWidth="150.0" />
                     </HBox>
                 </AnchorPane>
             </TitledPane>
         </panes>
     </Accordion>
     <HBox alignment="CENTER_LEFT" prefWidth="300.0">
-        <CheckBox fx:id="sendTextDataCheckbox" layoutX="5.0" prefWidth="150.0" text="Send text data"/>
+        <CheckBox fx:id="sendTextDataCheckbox" layoutX="5.0" prefWidth="150.0" text="Send text data" />
         <TextField fx:id="sendInput" maxWidth="260.0" minHeight="20.0" prefHeight="26.0" prefWidth="260.0">
         <HBox.margin>
-            <Insets right="5.0"/>
+            <Insets right="5.0" />
         </HBox.margin>
         </TextField>
-        <Button fx:id="sendButton" alignment="TOP_RIGHT" mnemonicParsing="false" text="Send"/>
+        <Button fx:id="sendButton" alignment="TOP_RIGHT" mnemonicParsing="false" text="Send" />
     </HBox>
     <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-        <Tab text="Untitled Tab 1">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"
-                        AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                        AnchorPane.topAnchor="0.0">
-                <VBox prefHeight="138.0" prefWidth="518.0"
-                      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                      AnchorPane.topAnchor="0.0">
-                    <TextArea fx:id="communicationOutput" layoutX="2.0" layoutY="2.0"
-                              AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0"
-                              AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="32.0" HBox.hgrow="ALWAYS"
-                              VBox.vgrow="ALWAYS"/>
+        <Tab text="Text messages">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <VBox prefHeight="138.0" prefWidth="518.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <TextArea fx:id="communicationOutput" layoutX="2.0" layoutY="2.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
                     <HBox layoutX="2.0" layoutY="8.0" prefHeight="30.0" prefWidth="500.0">
-                        <Button fx:id="saveTextLogButton" layoutX="165.0" layoutY="52.0"
-                                mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0"
-                                text="Save to file"/>
+                        <Button fx:id="saveTextLogButton" layoutX="165.0" layoutY="52.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Save to file" />
                     </HBox>
                 </VBox>
             </AnchorPane>
         </Tab>
-        <Tab text="Untitled Tab 2">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="147.0" prefWidth="776.0">
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0"/>
-                </ScrollPane>
-            </AnchorPane>
+        <Tab text="Text tiles">
+            <ScrollPane layoutX="2.0" layoutY="2.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+                <TilePane fx:id="textMessagesTiles" layoutX="2.0" layoutY="2.0" minHeight="400.0" minWidth="100.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+            </ScrollPane>
         </Tab>
-        <Tab text="Untitled Tab 2">
+        <Tab text="Settings">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                <TitledPane animated="false" layoutX="14.0" layoutY="14.0" prefHeight="117.0" prefWidth="207.0"
-                        text="Raw log settings">
+                <TitledPane animated="false" layoutX="14.0" layoutY="14.0" prefHeight="117.0" prefWidth="207.0" text="Raw log settings">
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                        <CheckBox fx:id="rawLogSaveToFileCheckbox" layoutX="12.0" layoutY="5.0"
-                                  mnemonicParsing="false" text="Save to file"/>
-                        <Label layoutX="12.0" layoutY="32.0" text="Raw log file path:"/>
-                        <TextField fx:id="rawLogFileEdit" layoutX="12.0" layoutY="52.0"/>
-                        <Button fx:id="rawLogFilePathSelectButton" layoutX="165.0" layoutY="52.0"
-                                mnemonicParsing="false" prefHeight="26.0" prefWidth="26.0" text="..."/>
+                        <CheckBox fx:id="rawLogSaveToFileCheckbox" layoutX="12.0" layoutY="5.0" mnemonicParsing="false" text="Save to file" />
+                        <Label layoutX="12.0" layoutY="32.0" text="Raw log file path:" />
+                        <TextField fx:id="rawLogFileEdit" layoutX="12.0" layoutY="52.0" />
+                        <Button fx:id="rawLogFilePathSelectButton" layoutX="165.0" layoutY="52.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="26.0" text="..." />
                     </AnchorPane>
                 </TitledPane>
-                <TitledPane animated="false" layoutX="239.0" layoutY="14.0" prefHeight="191.0" prefWidth="207.0"
-                            text="Text log settings">
+                <TitledPane animated="false" layoutX="239.0" layoutY="14.0" prefHeight="191.0" prefWidth="207.0" text="Text log settings">
                     <VBox minHeight="0.0" minWidth="0.0" prefHeight="152.0" prefWidth="206.0">
-                        <Label alignment="CENTER" layoutX="13.0" layoutY="54.0" text="Delimiter:"/>
-                        <ChoiceBox fx:id="delimiterSelect" layoutX="13.0" layoutY="72.0"
-                                   prefWidth="150.0"/>
-                        <CheckBox fx:id="addTimestampCheckbox" layoutX="14.0" layoutY="5.0"
-                                  mnemonicParsing="false" text="Add time stamp"/>
-                        <CheckBox fx:id="addDirectionCheckbox" layoutX="14.0" layoutY="28.0"
-                                  mnemonicParsing="false" text="Add direction"/>
-                        <Label layoutX="13.0" layoutY="107.0" text="Message waith timeout, s:"/>
-                        <TextField fx:id="messageWaitTimeoutEdit" layoutX="14.0" layoutY="125.0"/>
+                        <Label alignment="CENTER" layoutX="13.0" layoutY="54.0" text="Delimiter:" />
+                        <ChoiceBox fx:id="delimiterSelect" layoutX="13.0" layoutY="72.0" prefWidth="150.0" />
+                        <CheckBox fx:id="addTimestampCheckbox" layoutX="14.0" layoutY="5.0" mnemonicParsing="false" text="Add time stamp" />
+                        <CheckBox fx:id="addDirectionCheckbox" layoutX="14.0" layoutY="28.0" mnemonicParsing="false" text="Add direction" />
+                        <Label layoutX="13.0" layoutY="107.0" text="Message waith timeout, s:" />
+                        <TextField fx:id="messageWaitTimeoutEdit" layoutX="14.0" layoutY="125.0" />
                     </VBox>
                 </TitledPane>
+            <TitledPane animated="false" layoutX="465.0" layoutY="14.0" text="Byte array logs">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                         <Label layoutX="14.0" layoutY="14.0" text="Word size" />
+                        <ChoiceBox fx:id="wordSizeSelect" layoutX="14.0" layoutY="32.0" prefWidth="150.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </TitledPane>
             </AnchorPane>
+        </Tab>
+        <Tab text="Byte array view">
+            <SplitPane dividerPositions="0.67" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <TilePane fx:id="byteHexOutput" layoutX="2.0" layoutY="2.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                <TilePane fx:id="byteCusomOutput" layoutX="2.0" layoutY="2.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+            </SplitPane>
         </Tab>
     </TabPane>
 </VBox>

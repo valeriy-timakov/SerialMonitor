@@ -30,6 +30,9 @@ public class SendDataController {
                 case UP -> moveSendToHistory(-1);
                 case ENTER -> send();
             }
+            if (!sendTextDataCheckbox.isSelected()) {
+                sendButton.setDisable(sendInput.getText().length() % 2 == 1);
+            }
         });
         sendInput.setTextFormatter(new TextFormatter<>(change -> {
             if (!sendTextDataCheckbox.isSelected()) {
@@ -58,6 +61,10 @@ public class SendDataController {
             if (sendTextDataCheckbox.isSelected()) {
                 messageConsumer.consume(enteredText);
             } else {
+                if (sendInput.getText().length() % 2 == 1) {
+                    sendButton.setDisable(true);
+                    return;
+                }
                 byte[] data = convertToBytes(enteredText);
                 messageConsumer.consume(data, data.length);
             }
@@ -71,18 +78,23 @@ public class SendDataController {
     }
 
     private byte[] convertToBytes(String value) {
-        byte[] result = new byte[value.length()];
-        for (int i = 0; i < value.length(); i++) {
-            char ch = value.charAt(i);
-            if (ch >= '0' && ch <= '9') {
-                result[i] = (byte) (ch - '0');
-            } else if (ch >= 'a' && ch <= 'f') {
-                result[i] = (byte) (ch - 'a' + 10);
-            } else {
-                throw new IllegalArgumentException("Invalid char for HEG number! Char: " + ch);
-            }
+        byte[] result = new byte[value.length() / 2];
+        for (int i = 0; i < result.length; i++) {
+            byte byteValue = fromDigit(value.charAt(2 * i));
+            byteValue = (byte) ((byteValue << 4) + fromDigit(value.charAt(2 * i + 1)));
+            result[i] = byteValue;
         }
         return result;
+    }
+
+    private byte fromDigit(char value) {
+        if (value >= '0' && value <= '9') {
+            return (byte) (value - '0');
+        } else if (value >= 'a' && value <= 'f') {
+            return (byte) (value - 'a' + 10);
+        } else {
+            throw new IllegalArgumentException("Invalid char for HEG number! Char: " + value);
+        }
     }
 
     public void updateOpenedPortDataWrapper(Boolean connected) {

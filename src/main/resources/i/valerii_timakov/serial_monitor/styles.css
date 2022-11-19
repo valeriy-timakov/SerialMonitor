@@ -1,0 +1,22 @@
+
+.word {
+    margin: 10px;
+    -fx-background-color: #cbe5b1;
+}
+
+.selected.incoming {
+    -fx-fill: #bc3bc6;
+}
+
+.selected.outcoming {
+    -fx-fill: #cddb42;
+}
+
+.unselected.incoming {
+    -fx-fill: #45b3d2;
+}
+
+.unselected.outcoming {
+    -fx-fill: #189318;
+}
+

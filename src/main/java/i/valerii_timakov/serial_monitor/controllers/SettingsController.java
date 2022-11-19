@@ -29,6 +29,7 @@ public class SettingsController {
     private final CheckBox addTimestampCheckbox;
     private final CheckBox addDirectionCheckbox;
     private final TextField messageWaitTimeoutEdit;
+    private final ChoiceBox<ItemWrapper<Integer>> wordSizeSelect;
 
     private final List<ItemWrapper<String>> endItemWrappers = Arrays.asList(
         new ItemWrapper<>("\n", "NL"),
@@ -36,6 +37,13 @@ public class SettingsController {
         new ItemWrapper<>("\r\n", "CR & NL"),
         new ItemWrapper<>("\u0000", "ZERO"),
         new ItemWrapper<>("", "NONE")
+    );
+
+    private final List<ItemWrapper<Integer>> wordSizeItemWrappers = Arrays.asList(
+        new ItemWrapper<>(1, "Byte"),
+        new ItemWrapper<>(2, "Short"),
+        new ItemWrapper<>(4, "Integer"),
+        new ItemWrapper<>(8, "Long")
     );
 
     public void init(Stage stage) {
@@ -58,6 +66,11 @@ public class SettingsController {
             service.set(Propery.Delimiter, delimiterSelect.getValue().getValue()));
         delimiterSelect.setValue(endItemWrappers.stream()
             .filter(w -> w.getValue().equals(service.get(Propery.Delimiter))).findAny().orElse(endItemWrappers.get(0)));
+
+        wordSizeSelect.getItems().setAll(wordSizeItemWrappers);
+        wordSizeSelect.setOnAction(e -> service.set(Propery.WordSize, wordSizeSelect.getValue().getValue()));
+        wordSizeSelect.setValue(wordSizeItemWrappers.stream()
+            .filter(w -> service.get(Propery.WordSize).equals(w.getValue())).findAny().orElse(wordSizeItemWrappers.get(0)));
 
 
         //binary log save path

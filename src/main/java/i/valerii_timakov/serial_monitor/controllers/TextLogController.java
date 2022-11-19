@@ -26,7 +26,7 @@ public class TextLogController {
     private final TextArea view;
     private final Button saveTextLogButton;
     private final TextLogService textLogService;
-    private SettingsService settingsService;
+    private final SettingsService settingsService;
     @Setter
     @NonNull
     private String inputDirectionMessage = "[>>>>>>] ";
@@ -62,8 +62,7 @@ public class TextLogController {
         view.positionCaret(logCaretPosition);
     }
 
-    public void init(Stage stage, SettingsService settingsService) {
-        this.settingsService = settingsService;
+    public void init(Stage stage) {
         saveTextLogButton.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select file");

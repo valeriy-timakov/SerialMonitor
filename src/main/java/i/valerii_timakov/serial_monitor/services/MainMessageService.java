@@ -43,13 +43,14 @@ public class MainMessageService implements TextMessageConsumer, ByteArrayMessage
         outcomingMessageConsumer.consume(message + append);
         consume(message, false);
         byte[] bytes = message.getBytes();
-        saveToConversationLog(bytes, bytes.length);
+        consume(bytes, bytes.length, false);
     }
 
     @Override
     public void consume(byte[] src, int length) throws IOException {
         outcomingMessageConsumer.consume(src, length);
         consume(src, length, false);
+        consume(new String(Arrays.copyOf(src, length)), false);
     }
 
     private void saveToConversationLog(byte[] src, int count) {

@@ -6,11 +6,14 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
-public class Message {
+public class WordMessage {
     @Getter
-    private final String value;
+    private final Number word;
     @Getter
     private final LocalDateTime time;
     @Getter
     private final boolean incoming;
+    @Getter
+    private final int wordSize;
 }
+

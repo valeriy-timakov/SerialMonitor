@@ -6,6 +6,7 @@ import i.valerii_timakov.serial_monitor.controllers.select_wrappers.ItemWrapper;
 import i.valerii_timakov.serial_monitor.controllers.select_wrappers.PortWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j2;
 
@@ -62,11 +63,19 @@ public class SerialMonitorController {
     private Button refreshPortsButton;
     @FXML
     private CheckBox sendTextDataCheckbox;
+    @FXML
+    private TilePane textMessagesTiles;
+    @FXML
+    private TilePane byteHexOutput;
+    @FXML
+    private TilePane byteCusomOutput;
+    @FXML
+    private ChoiceBox wordSizeSelect;
 
     public void init(Stage stage, ServicesFactory servicesFactory) {
         TextLogController textLogController = new TextLogController(communicationOutput, saveTextLogButton,
-            servicesFactory.getTextLogService());
-        textLogController.init(stage, servicesFactory.getSettingsService());
+            servicesFactory.getTextLogService(), servicesFactory.getSettingsService());
+        textLogController.init(stage);
 
         SendDataController sendDataController = new SendDataController(sendButton, sendInput, sendTextDataCheckbox,
             servicesFactory.getMainMessageService());
@@ -75,13 +84,21 @@ public class SerialMonitorController {
 
         SettingsController settingsController = new SettingsController(servicesFactory.getSettingsService(), rawLogSaveToFileCheckbox,
             rawLogFileEdit, rawLogFilePathSelectButton, delimiterSelect, addTimestampCheckbox, addDirectionCheckbox,
-            messageWaitTimeoutEdit);
+            messageWaitTimeoutEdit, wordSizeSelect);
         settingsController.init(stage);
 
         PortSelectController portSelectController = new PortSelectController(portsSelect, openPortButton, closeCurrentPortButton,
             refreshPortsButton, baudRateSelect, dataBitsSelect, stopBitsSelect, paritySelect, flowControlSelect, encodingSelect,
             settingsPane, accodrion);
         portSelectController.init(servicesFactory.getPortWrapperService());
+
+        TileMessagesController tileMessagesController = new TileMessagesController(textMessagesTiles,
+            servicesFactory.getTextLogService(), servicesFactory.getSettingsService());
+        tileMessagesController.init();
+
+        ByteLogController byteLogController = new ByteLogController(byteHexOutput, byteCusomOutput,
+            servicesFactory.getByteLogService());
+        byteLogController.init();
     }
 
 }

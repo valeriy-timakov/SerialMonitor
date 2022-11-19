@@ -18,6 +18,7 @@ public class SerialMonitorApplication extends Application {
             Log.debug("Creating stage...");
             FXMLLoader fxmlLoader = new FXMLLoader(SerialMonitorApplication.class.getResource("main-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 920, 640);
+            scene.getStylesheets().add("i/valerii_timakov/serial_monitor/styles.css");
             stage.setTitle("Serial monitor");
             stage.setScene(scene);
             SerialMonitorController controller = fxmlLoader.getController();
