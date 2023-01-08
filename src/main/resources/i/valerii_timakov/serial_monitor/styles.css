@@ -1,22 +1,82 @@
 
+.bytes_view_pane {
+    -fx-background-color: #d6e2da;
+}
+
+.bytes_view {
+    -fx-background-color: #c9e3e5;
+    -fx-hgap: 3;
+    -fx-vgap: 1;
+}
+
+/*----------------------------------------------------------------*/
+
 .word {
-    margin: 10px;
-    -fx-background-color: #cbe5b1;
+    -fx-font-family: monospace;
 }
 
-.selected.incoming {
-    -fx-fill: #bc3bc6;
+.word_view {
+    -fx-background-color: #d6e2da;
 }
 
-.selected.outcoming {
-    -fx-fill: #cddb42;
+.word.incoming {
+    -fx-fill: #0032b0;
 }
 
-.unselected.incoming {
-    -fx-fill: #45b3d2;
+.word.outcoming {
+    -fx-fill: #009d00;
 }
 
-.unselected.outcoming {
-    -fx-fill: #189318;
+.word_view.selected {
+    -fx-background-color: #e7a866;
 }
 
+.word.selected.incoming {
+    -fx-fill: #2f00ff;
+}
+
+.word.selected.outcoming {
+    -fx-fill: #20863d;
+}
+
+.word_view.highlighted {
+    -fx-background-color: #e0bf89;
+}
+
+.word.highlighted.incoming {
+    -fx-fill: #2200ef;
+}
+
+.word.highlighted.outcoming {
+    -fx-fill: #1b9300;
+}
+
+.word_view.highlighted.current {
+    -fx-background-color: #c26b26;
+}
+
+.word.highlighted.current.incoming {
+    -fx-fill: #134fc6;
+    -fx-font-weight: 700;
+}
+
+.word.highlighted.current.outcoming {
+    -fx-fill: #2fff65;
+    -fx-font-weight: 700;
+}
+
+/*----------------------------------------------------------------*/
+
+.result_view {
+    -fx-background-color: #91a498;
+}
+
+.parsed_view {
+    -fx-fill: black;
+    color: black;
+}
+
+.error_view {
+    -fx-fill: #860303;
+    color: red;
+}

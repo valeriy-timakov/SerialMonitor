@@ -24,7 +24,6 @@ public class ServicesFactory {
         settingsService = new SettingsService();
         settingsService.init();
         byteLogService = new ByteLogService(settingsService);
-        byteLogService.init();
         mainMessageService = new MainMessageService(settingsService);
         mainMessageService.addIncomingTextConsumer(textLogService);
         mainMessageService.addIncomingByteArrConsumer(byteLogService);

@@ -20,8 +20,7 @@ public class SettingsService {
             Propery.MaybeConversationLogPath, Optional.of("C:/Users/valti/Projects/conversation.log"),
             Propery.MaxMessageWaitSeconds, 30,
             Propery.AddTimestampToTextMessageLog, true,
-            Propery.AddDirectionToTextMessageLog, true,
-            Propery.WordSize, 2
+            Propery.AddDirectionToTextMessageLog, true
     );
 
     private final Map<Propery, Object> properties = new HashMap<>();

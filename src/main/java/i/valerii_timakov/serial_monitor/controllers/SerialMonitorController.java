@@ -6,6 +6,7 @@ import i.valerii_timakov.serial_monitor.controllers.select_wrappers.ItemWrapper;
 import i.valerii_timakov.serial_monitor.controllers.select_wrappers.PortWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j2;
@@ -66,11 +67,15 @@ public class SerialMonitorController {
     @FXML
     private TilePane textMessagesTiles;
     @FXML
-    private TilePane byteHexOutput;
+    private FlowPane byteHexOutput;
     @FXML
-    private TilePane byteCusomOutput;
+    private SplitPane byteCusomOutput;
     @FXML
     private ChoiceBox wordSizeSelect;
+    @FXML
+    private ScrollPane byteHexOutputScrool;
+    @FXML
+    private ScrollPane byteCusomOutputScrool;
 
     public void init(Stage stage, ServicesFactory servicesFactory) {
         TextLogController textLogController = new TextLogController(communicationOutput, saveTextLogButton,
@@ -96,8 +101,8 @@ public class SerialMonitorController {
             servicesFactory.getTextLogService(), servicesFactory.getSettingsService());
         tileMessagesController.init();
 
-        ByteLogController byteLogController = new ByteLogController(byteHexOutput, byteCusomOutput,
-            servicesFactory.getByteLogService());
+        ByteLogController byteLogController = new ByteLogController(byteHexOutput, byteHexOutputScrool, byteCusomOutput,
+                byteCusomOutputScrool, servicesFactory.getByteLogService());
         byteLogController.init();
     }
 

@@ -4,6 +4,7 @@ module i.valerii_timakov.serial_monitor {
     requires com.fazecast.jSerialComm;
     requires org.apache.logging.log4j;
     requires static lombok;
+    requires org.apache.commons.lang3;
 
 
     exports i.valerii_timakov.serial_monitor;

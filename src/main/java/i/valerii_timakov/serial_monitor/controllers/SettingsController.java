@@ -66,12 +66,12 @@ public class SettingsController {
             service.set(Propery.Delimiter, delimiterSelect.getValue().getValue()));
         delimiterSelect.setValue(endItemWrappers.stream()
             .filter(w -> w.getValue().equals(service.get(Propery.Delimiter))).findAny().orElse(endItemWrappers.get(0)));
-
+/*
         wordSizeSelect.getItems().setAll(wordSizeItemWrappers);
         wordSizeSelect.setOnAction(e -> service.set(Propery.WordSize, wordSizeSelect.getValue().getValue()));
         wordSizeSelect.setValue(wordSizeItemWrappers.stream()
             .filter(w -> service.get(Propery.WordSize).equals(w.getValue())).findAny().orElse(wordSizeItemWrappers.get(0)));
-
+*/
 
         //binary log save path
         rawLogSaveToFileCheckbox.setOnAction(event -> updateMaybeConversationLogPath());

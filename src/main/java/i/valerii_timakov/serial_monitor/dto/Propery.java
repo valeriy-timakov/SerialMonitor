@@ -12,9 +12,7 @@ public enum Propery {
     MaybeConversationLogPath(v -> ((Optional<String>)v).orElse(null), Optional::ofNullable),
     MaxMessageWaitSeconds(Object::toString, Integer::valueOf),
     AddTimestampToTextMessageLog(Object::toString, Boolean::valueOf),
-    AddDirectionToTextMessageLog(Object::toString, Boolean::valueOf),
-
-    WordSize(Object::toString, Integer::valueOf);
+    AddDirectionToTextMessageLog(Object::toString, Boolean::valueOf);
 
     @Getter
     private final Function<Object, String> serializer;

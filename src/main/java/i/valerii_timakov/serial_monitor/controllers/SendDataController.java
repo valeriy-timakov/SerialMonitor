@@ -2,6 +2,8 @@ package i.valerii_timakov.serial_monitor.controllers;
 
 import i.valerii_timakov.serial_monitor.services.*;
 import i.valerii_timakov.serial_monitor.utils.Log;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +32,10 @@ public class SendDataController {
                 case UP -> moveSendToHistory(-1);
                 case ENTER -> send();
             }
+        });
+        sendInput.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!sendTextDataCheckbox.isSelected()) {
-                sendButton.setDisable(sendInput.getText().length() % 2 == 1);
+                sendButton.setDisable(newValue.length() % 2 == 1);
             }
         });
         sendInput.setTextFormatter(new TextFormatter<>(change -> {
