@@ -25,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 public class TextLogController {
     private final TextArea view;
     private final Button saveTextLogButton;
+    private final Button clearTextLogButton;
     private final TextLogService textLogService;
     private final SettingsService settingsService;
     @Setter
@@ -66,13 +67,14 @@ public class TextLogController {
         saveTextLogButton.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select file");
-            File selectedFile = fileChooser.showOpenDialog(stage);
+            File selectedFile = fileChooser.showSaveDialog(stage);
             try {
                 save(selectedFile.toPath(), Charset.defaultCharset());
             } catch (IOException e) {
                 Log.error("Error saving text log!", e);
             }
         });
+        clearTextLogButton.setOnAction(event -> view.clear());
         textLogService.addMessageConsumer(this::consume);
     }
 

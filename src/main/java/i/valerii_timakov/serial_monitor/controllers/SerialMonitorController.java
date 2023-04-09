@@ -61,6 +61,8 @@ public class SerialMonitorController {
     @FXML
     private Button saveTextLogButton;
     @FXML
+    private Button clearTextLogButton;
+    @FXML
     private Button refreshPortsButton;
     @FXML
     private CheckBox sendTextDataCheckbox;
@@ -78,7 +80,7 @@ public class SerialMonitorController {
     private ScrollPane byteCusomOutputScrool;
 
     public void init(Stage stage, ServicesFactory servicesFactory) {
-        TextLogController textLogController = new TextLogController(communicationOutput, saveTextLogButton,
+        TextLogController textLogController = new TextLogController(communicationOutput, saveTextLogButton, clearTextLogButton,
             servicesFactory.getTextLogService(), servicesFactory.getSettingsService());
         textLogController.init(stage);
 
