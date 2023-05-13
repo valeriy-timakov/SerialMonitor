@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Main-Class: i.valerii_timakov.serial_monitor.SerialMonitorApplication

@@ -73,11 +73,13 @@ public class SerialMonitorController {
     @FXML
     private SplitPane byteCusomOutput;
     @FXML
-    private ChoiceBox wordSizeSelect;
+    private ChoiceBox<ItemWrapper<Integer>> wordSizeSelect;
     @FXML
     private ScrollPane byteHexOutputScrool;
     @FXML
     private ScrollPane byteCusomOutputScrool;
+    @FXML
+    private ChoiceBox<ItemWrapper<String>> sendBinaryFormatSelect;
 
     public void init(Stage stage, ServicesFactory servicesFactory) {
         TextLogController textLogController = new TextLogController(communicationOutput, saveTextLogButton, clearTextLogButton,
@@ -85,7 +87,7 @@ public class SerialMonitorController {
         textLogController.init(stage);
 
         SendDataController sendDataController = new SendDataController(sendButton, sendInput, sendTextDataCheckbox,
-            servicesFactory.getMainMessageService());
+                sendBinaryFormatSelect, servicesFactory.getMainMessageService());
         sendDataController.init();
         servicesFactory.getPortWrapperService().addConnectionStateListener(sendDataController::updateOpenedPortDataWrapper);
 
@@ -104,7 +106,7 @@ public class SerialMonitorController {
         tileMessagesController.init();
 
         ByteLogController byteLogController = new ByteLogController(byteHexOutput, byteHexOutputScrool, byteCusomOutput,
-                byteCusomOutputScrool, servicesFactory.getByteLogService());
+                byteCusomOutputScrool, servicesFactory.getByteLogService(), servicesFactory.getSettingsService());
         byteLogController.init();
     }
 

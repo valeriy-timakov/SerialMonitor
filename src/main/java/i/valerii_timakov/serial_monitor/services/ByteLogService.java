@@ -20,9 +20,9 @@ public class ByteLogService implements ByteArrayMessageConsumer {
 
     private final SettingsService settingsService;
 
-    private List<Consumer<ByteMessage>> wordConsumers = new ArrayList<>();
+    private final List<Consumer<ByteMessage>> wordConsumers = new ArrayList<>();
 
-    private PooledLinkedList<Byte> buffer = new PooledLinkedList<>();
+    private final PooledLinkedList<Byte> buffer = new PooledLinkedList<>();
 
     public void addWordConsumer(@NonNull Consumer<ByteMessage> consumer) {
         wordConsumers.add(consumer);

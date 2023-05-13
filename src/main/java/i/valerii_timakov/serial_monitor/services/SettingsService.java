@@ -16,11 +16,12 @@ public class SettingsService {
     private static final String PATH = "app.properties";
 
     private static final Map<Propery, Object> DEFAULT_VALUES = Map.of(
-            Propery.Delimiter, "\r\n",
-            Propery.MaybeConversationLogPath, Optional.of("C:/Users/valti/Projects/conversation.log"),
-            Propery.MaxMessageWaitSeconds, 30,
-            Propery.AddTimestampToTextMessageLog, true,
-            Propery.AddDirectionToTextMessageLog, true
+        Propery.Delimiter, "\r\n",
+        Propery.MaybeConversationLogPath, Optional.of("C:/Users/valti/Projects/conversation.log"),
+        Propery.MaxMessageWaitSeconds, 30,
+        Propery.AddTimestampToTextMessageLog, true,
+        Propery.AddDirectionToTextMessageLog, true,
+        Propery.MessageDelay, 100L
     );
 
     private final Map<Propery, Object> properties = new HashMap<>();

@@ -87,11 +87,16 @@
     <HBox alignment="CENTER_LEFT" prefWidth="300.0">
         <CheckBox fx:id="sendTextDataCheckbox" layoutX="5.0" prefWidth="150.0" text="Send text data" />
         <TextField fx:id="sendInput" maxWidth="260.0" minHeight="20.0" prefHeight="26.0" prefWidth="260.0">
-        <HBox.margin>
-            <Insets right="5.0" />
-        </HBox.margin>
+            <HBox.margin>
+                <Insets right="5.0" />
+            </HBox.margin>
         </TextField>
         <Button fx:id="sendButton" alignment="TOP_RIGHT" mnemonicParsing="false" text="Send" />
+        <ChoiceBox fx:id="sendBinaryFormatSelect" prefWidth="150.0">
+            <HBox.margin>
+                <Insets right="8.0" />
+            </HBox.margin>
+        </ChoiceBox>
     </HBox>
     <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <Tab text="Text messages">
@@ -145,7 +150,7 @@
         <Tab text="Byte array view">
             <SplitPane dividerPositions="0.67" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <ScrollPane fx:id="byteHexOutputScrool" layoutX="2.0" layoutY="2.0" styleClass="bytes_view_pane" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
-                    <FlowPane fx:id="byteHexOutput" layoutX="2.0" layoutY="2.0" maxHeight="1600.0" minWidth="200.0" prefWrapLength="550.0" styleClass="bytes_view" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
+                    <FlowPane fx:id="byteHexOutput" layoutX="2.0" layoutY="2.0" maxHeight="Infinity" minWidth="200.0" prefWrapLength="550.0" styleClass="bytes_view" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />
                 </ScrollPane>
                 <ScrollPane fx:id="byteCusomOutputScrool" layoutX="2.0" layoutY="2.0" styleClass="bytes_view_pane" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                     <SplitPane fx:id="byteCusomOutput" layoutX="2.0" layoutY="2.0" maxHeight="1600.0" minWidth="200.0" orientation="VERTICAL" styleClass="parsed_view" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS" />

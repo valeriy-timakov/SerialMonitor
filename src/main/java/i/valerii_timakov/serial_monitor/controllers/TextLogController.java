@@ -37,7 +37,6 @@ public class TextLogController {
     @Setter
     @NonNull
     private String messagesDelimiter = "\n";
-    @Setter
     @NonNull
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS - ");
 

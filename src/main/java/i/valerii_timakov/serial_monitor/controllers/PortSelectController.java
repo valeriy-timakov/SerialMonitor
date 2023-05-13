@@ -4,6 +4,7 @@ import com.fazecast.jSerialComm.SerialPort;
 import i.valerii_timakov.serial_monitor.controllers.select_wrappers.IntWrapper;
 import i.valerii_timakov.serial_monitor.controllers.select_wrappers.ItemWrapper;
 import i.valerii_timakov.serial_monitor.controllers.select_wrappers.PortWrapper;
+import i.valerii_timakov.serial_monitor.controllers.select_wrappers.SettinggsData;
 import i.valerii_timakov.serial_monitor.services.PortWrapperService;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -80,7 +81,7 @@ public class PortSelectController {
                 .collect(Collectors.toList()));
     }
 
-
+/*
     private static final class SettinggsData<T, W extends ItemWrapper<T>> {
         public final ChoiceBox<W> select;
         public final List<W> variants;
@@ -138,7 +139,7 @@ public class PortSelectController {
                     .ifPresent(select::setValue);
             }
         }
-    }
+    }*/
 
     private List<SettinggsData<?, ? extends ItemWrapper<?>>> settinggsData;
     private final List<IntWrapper> baudRateItemWrappers = Stream.of(9600, 19200, 38400, 56000, 115200, 128000, 256000)

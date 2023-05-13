@@ -1,5 +1,6 @@
 package i.valerii_timakov.serial_monitor.controllers;
 
+import i.valerii_timakov.serial_monitor.controllers.select_wrappers.ItemWrapper;
 import i.valerii_timakov.serial_monitor.services.*;
 import i.valerii_timakov.serial_monitor.utils.Log;
 import javafx.beans.value.ChangeListener;
@@ -16,6 +17,7 @@ public class SendDataController {
     private final Button sendButton;
     private final TextField sendInput;
     private final CheckBox sendTextDataCheckbox;
+    private final ChoiceBox<ItemWrapper<String>> sendBinaryFormatSelect;
     @NonNull
     private final UnidirectedMessageConsumer messageConsumer;
     private int historyPosition = 0;

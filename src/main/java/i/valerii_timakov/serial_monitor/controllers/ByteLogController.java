@@ -3,14 +3,24 @@ package i.valerii_timakov.serial_monitor.controllers;
 import i.valerii_timakov.serial_monitor.controls.ByteView;
 import i.valerii_timakov.serial_monitor.controls.ParsedView;
 import i.valerii_timakov.serial_monitor.dto.ByteMessage;
+import i.valerii_timakov.serial_monitor.dto.Propery;
 import i.valerii_timakov.serial_monitor.errors.NotEnoughDataException;
 import i.valerii_timakov.serial_monitor.services.ByteLogService;
+import i.valerii_timakov.serial_monitor.services.SettingsService;
 import javafx.application.Platform;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SplitPane;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,9 +33,13 @@ public class ByteLogController {
     private final FlowPane byteHexOutput;
     private final ScrollPane byteHexOutputScrool;
     private final SplitPane byteCustomOutput;
-    private final ScrollPane byteCusomOutputScrool;
+    private final ScrollPane byteCustomOutputScrool;
     private final ByteLogService service;
+    private final SettingsService settingsService;
     private List<ByteView> lastHighlighted;
+    private boolean lastByteDirectionIsIncoming;
+    private LocalDateTime lastByteTime;
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS");
 
     private final Map<ByteView, ParsedView> representationsMap = new HashMap<>();
 
@@ -38,14 +52,60 @@ public class ByteLogController {
             byteHexOutput.setPrefHeight(newValue.getHeight());
             byteHexOutput.setPrefWrapLength(newValue.getWidth());
         });
-        byteCusomOutputScrool.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
+        byteCustomOutputScrool.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
             byteCustomOutput.setPrefWidth(newValue.getWidth());
             byteCustomOutput.setPrefHeight(newValue.getHeight());
         });
+        lastByteTime = LocalDateTime.now();
+
+        initMenu();
+    }
+
+    private void initMenu() {
+        ContextMenu menu = new ContextMenu();
+        addMenuItem("Clear", event -> {
+            representationsMap.clear();
+            byteHexOutput.getChildren().clear();
+            byteCustomOutput.getItems().clear();
+            byteCustomOutput.setMinHeight(0);
+        }, menu);
+        menu.getItems().add(new MenuItem("Copy"));
+        byteHexOutput.setOnContextMenuRequested(event -> {
+            menu.show(byteHexOutput, event.getScreenX(), event.getScreenY());
+        });
+    }
+
+    private void addMenuItem(String label, EventHandler<ActionEvent> action, ContextMenu menu) {
+        MenuItem item = new MenuItem(label);
+        item.setOnAction(action);
+        menu.getItems().add(item);
     }
 
     private void addData(ByteMessage byteMessage) {
         final ByteView text = new ByteView(byteMessage);
+        boolean directionChanged = lastByteDirectionIsIncoming != byteMessage.isIncoming() && byteHexOutput.getChildren().size() > 0;
+        lastByteDirectionIsIncoming = byteMessage.isIncoming();
+        long messageDelay = settingsService.get(Propery.MessageDelay);
+        boolean delayEnough = lastByteTime != null &&
+                ChronoUnit.MILLIS.between(lastByteTime, byteMessage.getTime()) > messageDelay;
+        lastByteTime = byteMessage.getTime();
+        if (directionChanged || delayEnough) {
+            Region p = new Region();
+            p.setPrefSize(Double.MAX_VALUE, 0.0);
+            byteHexOutput.getChildren().add(p);
+            TextFlow tymestampLabelContainer = new TextFlow();
+            Text timestampLabel = new Text(dateTimeFormatter.format(byteMessage.getTime()) + " " +
+                (byteMessage.isIncoming() ? ">>>" : "<<<"));
+            tymestampLabelContainer.setPrefSize(Double.MAX_VALUE, 0.0);
+            tymestampLabelContainer.getChildren().add(timestampLabel);
+            byteHexOutput.getChildren().add(tymestampLabelContainer);
+        }
+        addSelectListener(text);
+        byteHexOutput.getChildren().add(text);
+        //byteHexOutput.scro
+    }
+
+    private void addSelectListener(ByteView text) {
         text.setSelectedChangeListener(selected -> {
             if (selected) {
                 ParsedView parsedView = new ParsedView(len -> {
@@ -65,7 +125,6 @@ public class ByteLogController {
                 removeHighlighted(text);
             }
         });
-        byteHexOutput.getChildren().add(text);
     }
 
     private class BytesReader implements i.valerii_timakov.serial_monitor.utils.BytesReader {
