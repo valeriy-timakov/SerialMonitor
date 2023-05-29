@@ -74,7 +74,9 @@ public class SendDataController {
                 byte[] data = convertToBytes(enteredText);
                 messageConsumer.consume(data, data.length);
             }
-            currSendHistory.add(enteredText);
+            if (currSendHistory.isEmpty() || !currSendHistory.get(currSendHistory.size() - 1).equals(enteredText)) {
+                currSendHistory.add(enteredText);
+            }
             historyPosition = currSendHistory.size();
             sendInput.setText("");
         } catch (Throwable t) {
