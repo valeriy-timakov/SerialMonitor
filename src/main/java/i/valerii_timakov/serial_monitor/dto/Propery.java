@@ -9,11 +9,10 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public enum Propery {
     Delimiter(null, null),
-    MaybeConversationLogPath(v -> ((Optional<String>)v).orElse(null), Optional::ofNullable),
-    MaxMessageWaitSeconds(Object::toString, Integer::valueOf),
+    MaybeConversationLogPath(v -> ((Optional<String>) v).orElse(null), Optional::ofNullable),
+    MessageDelay(Object::toString, Integer::valueOf),
     AddTimestampToTextMessageLog(Object::toString, Boolean::valueOf),
-    AddDirectionToTextMessageLog(Object::toString, Boolean::valueOf),
-    MessageDelay(Object::toString, Long::valueOf);
+    AddDirectionToTextMessageLog(Object::toString, Boolean::valueOf);
 
     @Getter
     private final Function<Object, String> serializer;

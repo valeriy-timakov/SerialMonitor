@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Log4j2
@@ -24,14 +25,9 @@ public class OpenedPortWrapper implements AutoCloseable, Runnable {
     @NonNull
     private final SerialPort port;
     private final int bufferSize;
-    @Getter
-    @Setter
-    private Charset charset = Charset.defaultCharset();
     private boolean stop = false;
     @Setter
-    private TextMessageConsumer textMessageConsumer;
-    @Setter
-    private ByteArrayMessageConsumer byteArrayMessageConsumer;
+    List<ByteArrayMessageConsumer> consumers;
     @Setter
     private Runnable onClose;
     @Getter
@@ -59,21 +55,31 @@ public class OpenedPortWrapper implements AutoCloseable, Runnable {
             int readTryCount = 0;
             while (!stop && port.isOpen()) {
                 try {
+                    boolean consumed = false;
                     if (port.bytesAvailable() > 0) {
                         int numRead = port.readBytes(buffer, buffer.length);
-                        if (byteArrayMessageConsumer != null) {
-                            Log.debug("Calling byteArrayInputConsumer");
-                            byteArrayMessageConsumer.consume(buffer, numRead, true);
-                            Log.debug("byteArrayInputConsumer finished");
-                        }
-                        String readed = new String(buffer, 0, numRead, charset);
-                        Log.debug("OpenedPortWrapper: %1$d bytes readed \"%2$s\"", numRead, readed);
-                        if (textMessageConsumer != null) {
-                            Log.debug("Calling stringInputConsumer");
-                            textMessageConsumer.consume(readed, true);
-                            Log.debug("stringInputConsumer finished");
+                        if (consumers != null) {
+                            Log.debug("Calling consumers");
+                            for (ByteArrayMessageConsumer consumer : consumers) {
+                                try {
+                                    consumer.consume(buffer, numRead, true);
+                                } catch (Throwable t) {
+                                    Log.error("Error consuming byte array message!", t);
+                                }
+                            }
+                            consumed = true;
+                            Log.debug("consumers finished");
                         }
                         readTryCount = 0;
+                    }
+                    if (!consumed && consumers != null) {
+                        for (ByteArrayMessageConsumer consumer : consumers) {
+                            try {
+                                consumer.idle();
+                            } catch (Throwable t) {
+                                Log.error("Error idle!", t);
+                            }
+                        }
                     }
                     try {
                         Thread.sleep(20);
@@ -127,12 +133,6 @@ public class OpenedPortWrapper implements AutoCloseable, Runnable {
                 thread.interrupt();
             }
         }
-    }
-
-    public void print(String value) throws IOException {
-        Log.debug("sending string data: " + value);
-        byte[] bytes = value.getBytes(charset);
-        write(bytes, bytes.length);
     }
 
     public void write(byte[] value, int length) throws IOException {

@@ -3,8 +3,10 @@ package i.valerii_timakov.serial_monitor.services;
 import com.fazecast.jSerialComm.SerialPort;
 import i.valerii_timakov.serial_monitor.exceptions.PortException;
 import i.valerii_timakov.serial_monitor.utils.Log;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -17,8 +19,9 @@ import java.util.function.Supplier;
 @RequiredArgsConstructor
 public class PortWrapperService implements UnidirectedMessageConsumer {
 
-    private final TextMessageConsumer textMessageConsumer;
-    private final ByteArrayMessageConsumer byteArrayMessageConsumer;
+    private final List<ByteArrayMessageConsumer> consumers;
+
+    private Charset charset = Charset.defaultCharset();
 
     private Optional<OpenedPortWrapper> currentOpenedPortWrapper;
     private final List<Consumer<Boolean>> connectionStateListeners = new ArrayList<>();
@@ -30,7 +33,9 @@ public class PortWrapperService implements UnidirectedMessageConsumer {
     private final Supplier<IOException> noPortErrorSuplier = () -> new IOException("No port for outcoming message!");
     @Override
     public void consume(String message) throws IOException {
-        currentOpenedPortWrapper.orElseThrow(noPortErrorSuplier).print(message);
+        Log.debug("sending string data: " + message);
+        byte[] bytes = message.getBytes(charset);
+        currentOpenedPortWrapper.orElseThrow(noPortErrorSuplier).write(bytes, bytes.length);
     }
 
     @Override
@@ -48,8 +53,7 @@ public class PortWrapperService implements UnidirectedMessageConsumer {
 
         OpenedPortWrapper op = new OpenedPortWrapper(port);
         op.setOnClose(() -> setCurrentOpenedPortWrapper(null));
-        op.setTextMessageConsumer(textMessageConsumer);
-        op.setByteArrayMessageConsumer(byteArrayMessageConsumer);
+        op.setConsumers(consumers);
         try {
             op.init();
         } catch (PortException e) {
@@ -84,11 +88,11 @@ public class PortWrapperService implements UnidirectedMessageConsumer {
         }
     }
 
-    public Optional<Charset> getCurrentPortCharset() {
-        return currentOpenedPortWrapper.map(OpenedPortWrapper::getCharset);
+    public Charset getCurrentPortCharset() {
+        return charset;
     }
 
     public void setCurrentPortCharset(Charset currentPortCharset) {
-        currentOpenedPortWrapper.ifPresent(p -> p.setCharset(currentPortCharset));
+        charset = currentPortCharset;
     }
 }

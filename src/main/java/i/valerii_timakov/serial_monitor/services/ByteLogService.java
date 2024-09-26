@@ -39,6 +39,11 @@ public class ByteLogService implements ByteArrayMessageConsumer {
         }
     }
 
+    @Override
+    public void idle() {
+
+    }
+
     private void consume(Consumer<Consumer<ByteMessage>> consumer) {
         wordConsumers.forEach(c -> {
             try {

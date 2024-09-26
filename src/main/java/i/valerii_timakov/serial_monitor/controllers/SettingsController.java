@@ -57,8 +57,8 @@ public class SettingsController {
         addDirectionCheckbox.setSelected(service.get(Propery.AddDirectionToTextMessageLog));
 
         messageWaitTimeoutEdit.setOnAction(e ->
-            service.set(Propery.MaxMessageWaitSeconds, Integer.valueOf(messageWaitTimeoutEdit.getText())));
-        messageWaitTimeoutEdit.setText(Integer.toString(service.get(Propery.MaxMessageWaitSeconds)));
+            service.set(Propery.MessageDelay, Integer.valueOf(messageWaitTimeoutEdit.getText())));
+        messageWaitTimeoutEdit.setText(Integer.toString(service.get(Propery.MessageDelay)));
 
         //communicating messages delimiter
         delimiterSelect.getItems().setAll(endItemWrappers);

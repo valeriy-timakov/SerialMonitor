@@ -131,7 +131,7 @@
                         <ChoiceBox fx:id="delimiterSelect" layoutX="13.0" layoutY="72.0" prefWidth="150.0" />
                         <CheckBox fx:id="addTimestampCheckbox" layoutX="14.0" layoutY="5.0" mnemonicParsing="false" text="Add time stamp" />
                         <CheckBox fx:id="addDirectionCheckbox" layoutX="14.0" layoutY="28.0" mnemonicParsing="false" text="Add direction" />
-                        <Label layoutX="13.0" layoutY="107.0" text="Message waith timeout, s:" />
+                        <Label layoutX="13.0" layoutY="107.0" text="Message waith timeout, ms:" />
                         <TextField fx:id="messageWaitTimeoutEdit" layoutX="14.0" layoutY="125.0" />
                     </VBox>
                 </TitledPane>

@@ -1,44 +1,61 @@
 package i.valerii_timakov.serial_monitor.services;
 
+import i.valerii_timakov.serial_monitor.dto.ByteMessage;
 import i.valerii_timakov.serial_monitor.dto.Propery;
 import i.valerii_timakov.serial_monitor.utils.Log;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
+import java.nio.charset.Charset;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 @RequiredArgsConstructor
-public class InputScanner implements TextMessageConsumer {
+public class InputScanner implements ByteArrayMessageConsumer {
     @NonNull
     private final TextMessageConsumer wrappedConsumer;
     private final Queue<String> result = new LinkedList<>();
     private final List<String> buffer = new LinkedList<>();
     private final SettingsService settingsService;
     private LocalTime lastAddTime = null;
+    @Setter
+    private Charset charset = Charset.defaultCharset();
 
     @Override
-    public void consume(String message, boolean incoming) {
+    public void consume(byte[] src, int count, boolean incoming) {
+        String message = new String(src, 0, count, charset);
         add(message);
         while (hasResult()) {
             wrappedConsumer.consume(getResult(), incoming);
         }
     }
 
-    private void add(String data) {
+    @Override
+    public void idle() {
+        checkToFlush();
+    }
 
+    private void checkToFlush() {
         if (lastAddTime == null) {
             lastAddTime = LocalTime.now();
         } else {
-            int maxMessageWaitSeconds = settingsService.get(Propery.MaxMessageWaitSeconds);
-            if (Duration.between(lastAddTime, LocalTime.now()).toSeconds() > maxMessageWaitSeconds){
+            int maxMessageWaitMillis = settingsService.get(Propery.MessageDelay);
+            if (Duration.between(lastAddTime, LocalTime.now()).toMillis() > maxMessageWaitMillis){
                 Log.debug("scan time out - extracting messages");
                 extractMessage();
             }
         }
+
+    }
+
+    private void add(String data) {
+
+        checkToFlush();
 
         if (data == null || data.isEmpty()) {
             return;

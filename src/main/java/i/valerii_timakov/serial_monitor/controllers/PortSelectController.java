@@ -196,7 +196,7 @@ public class PortSelectController {
                 SerialPort::getFlowControlSettings, IntWrapper::new),
             new SettinggsData<>(encodingSelect, charsetsWrapper,
                 portWrapperService::setCurrentPortCharset,
-                () -> portWrapperService.getCurrentPortCharset().orElseGet(Charset::defaultCharset),
+                () -> portWrapperService.getCurrentPortCharset(),
                 (Charset value) -> new ItemWrapper<>(value, value.name()))
         );
         settinggsData.forEach(SettinggsData::init);

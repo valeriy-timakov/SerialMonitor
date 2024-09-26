@@ -3,6 +3,8 @@ package i.valerii_timakov.serial_monitor;
 import i.valerii_timakov.serial_monitor.services.*;
 import lombok.Getter;
 
+import java.util.List;
+
 public class ServicesFactory {
 
     @Getter
@@ -28,7 +30,7 @@ public class ServicesFactory {
         mainMessageService.addIncomingTextConsumer(textLogService);
         mainMessageService.addIncomingByteArrConsumer(byteLogService);
         inputScanner = new InputScanner(mainMessageService, settingsService);
-        portWrapperService = new PortWrapperService(inputScanner, mainMessageService);
+        portWrapperService = new PortWrapperService(List.of(inputScanner, mainMessageService));
         portWrapperService.init();
         mainMessageService.setOutcomingMessageConsumer(portWrapperService);
 

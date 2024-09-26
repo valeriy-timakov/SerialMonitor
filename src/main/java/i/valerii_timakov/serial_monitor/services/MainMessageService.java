@@ -53,6 +53,11 @@ public class MainMessageService implements TextMessageConsumer, ByteArrayMessage
         consume(new String(Arrays.copyOf(src, length)), false);
     }
 
+    @Override
+    public void idle() {
+
+    }
+
     private void saveToConversationLog(byte[] src, int count) {
         Optional<String> maybeConversationLogPath = settingsService.get(Propery.MaybeConversationLogPath);
         maybeConversationLogPath.ifPresent(conversationLogPath -> {
