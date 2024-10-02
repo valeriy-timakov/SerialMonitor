@@ -17,11 +17,10 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 @RequiredArgsConstructor
-public class PortWrapperService implements UnidirectedMessageConsumer {
+public class PortWrapperService implements OutgoingMessageConsumer {
 
     private final List<ByteArrayMessageConsumer> consumers;
 
-    private Charset charset = Charset.defaultCharset();
 
     private Optional<OpenedPortWrapper> currentOpenedPortWrapper;
     private final List<Consumer<Boolean>> connectionStateListeners = new ArrayList<>();
@@ -31,12 +30,6 @@ public class PortWrapperService implements UnidirectedMessageConsumer {
     }
 
     private final Supplier<IOException> noPortErrorSuplier = () -> new IOException("No port for outcoming message!");
-    @Override
-    public void consume(String message) throws IOException {
-        Log.debug("sending string data: " + message);
-        byte[] bytes = message.getBytes(charset);
-        currentOpenedPortWrapper.orElseThrow(noPortErrorSuplier).write(bytes, bytes.length);
-    }
 
     @Override
     public void consume(byte[] src, int length) throws IOException {
@@ -88,11 +81,4 @@ public class PortWrapperService implements UnidirectedMessageConsumer {
         }
     }
 
-    public Charset getCurrentPortCharset() {
-        return charset;
-    }
-
-    public void setCurrentPortCharset(Charset currentPortCharset) {
-        charset = currentPortCharset;
-    }
 }

@@ -5,6 +5,7 @@ import i.valerii_timakov.serial_monitor.controllers.select_wrappers.IntWrapper;
 import i.valerii_timakov.serial_monitor.controllers.select_wrappers.ItemWrapper;
 import i.valerii_timakov.serial_monitor.controllers.select_wrappers.PortWrapper;
 import i.valerii_timakov.serial_monitor.controllers.select_wrappers.SettinggsData;
+import i.valerii_timakov.serial_monitor.services.MainMessageService;
 import i.valerii_timakov.serial_monitor.services.PortWrapperService;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -38,9 +39,11 @@ public class PortSelectController {
     private final TitledPane settingsPane;
     private final Accordion accodrion;
     private PortWrapperService portWrapperService;
+    private MainMessageService mainMessageService;
 
-    public void init(PortWrapperService portWrapperService) {
+    public void init(PortWrapperService portWrapperService, MainMessageService mainMessageService) {
         this.portWrapperService = portWrapperService;
+        this.mainMessageService = mainMessageService;
 
         init();
 
@@ -195,8 +198,7 @@ public class PortSelectController {
                 (Integer value) -> getSelectedPort().ifPresent(port -> port.setFlowControl(value)),
                 SerialPort::getFlowControlSettings, IntWrapper::new),
             new SettinggsData<>(encodingSelect, charsetsWrapper,
-                portWrapperService::setCurrentPortCharset,
-                () -> portWrapperService.getCurrentPortCharset(),
+                mainMessageService::setCharset, mainMessageService::getCharset,
                 (Charset value) -> new ItemWrapper<>(value, value.name()))
         );
         settinggsData.forEach(SettinggsData::init);

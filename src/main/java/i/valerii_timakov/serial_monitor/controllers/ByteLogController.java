@@ -84,7 +84,7 @@ public class ByteLogController {
         final ByteView text = new ByteView(byteMessage);
         boolean directionChanged = lastByteDirectionIsIncoming != byteMessage.isIncoming() && byteHexOutput.getChildren().size() > 0;
         lastByteDirectionIsIncoming = byteMessage.isIncoming();
-        long messageDelay = settingsService.get(Propery.MessageDelay);
+        int messageDelay = settingsService.get(Propery.MessageDelay);
         boolean delayEnough = lastByteTime != null &&
                 ChronoUnit.MILLIS.between(lastByteTime, byteMessage.getTime()) > messageDelay;
         lastByteTime = byteMessage.getTime();

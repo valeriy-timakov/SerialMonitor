@@ -99,7 +99,7 @@ public class SerialMonitorController {
         PortSelectController portSelectController = new PortSelectController(portsSelect, openPortButton, closeCurrentPortButton,
             refreshPortsButton, baudRateSelect, dataBitsSelect, stopBitsSelect, paritySelect, flowControlSelect, encodingSelect,
             settingsPane, accodrion);
-        portSelectController.init(servicesFactory.getPortWrapperService());
+        portSelectController.init(servicesFactory.getPortWrapperService(), servicesFactory.getMainMessageService());
 
         TileMessagesController tileMessagesController = new TileMessagesController(textMessagesTiles,
             servicesFactory.getTextLogService(), servicesFactory.getSettingsService());

@@ -14,8 +14,6 @@ public class ServicesFactory {
     @Getter
     private final MainMessageService mainMessageService;
     @Getter
-    private final InputScanner inputScanner;
-    @Getter
     private final PortWrapperService portWrapperService;
     @Getter
     private final ByteLogService byteLogService;
@@ -29,8 +27,7 @@ public class ServicesFactory {
         mainMessageService = new MainMessageService(settingsService);
         mainMessageService.addIncomingTextConsumer(textLogService);
         mainMessageService.addIncomingByteArrConsumer(byteLogService);
-        inputScanner = new InputScanner(mainMessageService, settingsService);
-        portWrapperService = new PortWrapperService(List.of(inputScanner, mainMessageService));
+        portWrapperService = new PortWrapperService(List.of(mainMessageService));
         portWrapperService.init();
         mainMessageService.setOutcomingMessageConsumer(portWrapperService);
 
